@@ -9,6 +9,8 @@ import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.templatemodel.TemplateModel;
 import org.vaddon.CustomMediaQuery;
 
+import java.util.function.Consumer;
+
 @Tag("master-detail-view")
 @HtmlImport("frontend://com/github/appreciated/master-detail/master-detail-view.html")
 public class MasterDetailView extends PolymerTemplate<TemplateModel> implements HasSize {
@@ -24,6 +26,7 @@ public class MasterDetailView extends PolymerTemplate<TemplateModel> implements 
 
     private Component oldDetailView;
     private CustomMediaQuery isMasterAndDetailQuery;
+    private Consumer<MasterDetailView> waitUntilAttach;
 
     public MasterDetailView() {
         setSizeFull();
@@ -41,7 +44,11 @@ public class MasterDetailView extends PolymerTemplate<TemplateModel> implements 
     private void setMasterAndDetail(boolean masterAndDetail) {
         if (isAttached) {
             isMasterAndDetail = masterAndDetail;
-            System.out.println("isMasterAndDetail: " + masterAndDetail);
+            if (waitUntilAttach != null) {
+                Consumer<MasterDetailView> function = waitUntilAttach;
+                waitUntilAttach = null;
+                function.accept(this);
+            }
         }
     }
 
@@ -55,6 +62,17 @@ public class MasterDetailView extends PolymerTemplate<TemplateModel> implements 
      *
      */
     public <T, C extends Component & HasUrlParameter<T>> void setDetail(Class<? extends C> navigationTarget, T parameter) {
+        setDetail(navigationTarget, parameter, false);
+    }
+
+    /**
+     *
+     */
+    public <T, C extends Component & HasUrlParameter<T>> void setDetail(Class<? extends C> navigationTarget, T parameter, boolean ifMasterAndDetailVisible) {
+        if (!isAttached) {
+            waitUntilAttach = masterDetailView -> masterDetailView.setDetail(navigationTarget, parameter, ifMasterAndDetailVisible);
+            return;
+        }
         if (oldDetailView != null) {
             getElement().removeChild(oldDetailView.getElement());
         }
@@ -70,7 +88,7 @@ public class MasterDetailView extends PolymerTemplate<TemplateModel> implements 
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
-        } else {
+        } else if (!ifMasterAndDetailVisible) {
             UI.getCurrent().navigate(navigationTarget, parameter);
         }
     }

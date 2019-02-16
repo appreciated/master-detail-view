@@ -1,4 +1,4 @@
-package com.appreciated.masterdetail;
+package com.appreciated.masterdetail.component;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.StyleSheet;

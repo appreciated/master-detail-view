@@ -1,5 +1,6 @@
 package com.appreciated.masterdetail;
 
+import com.appreciated.masterdetail.component.ChatView;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.Route;
