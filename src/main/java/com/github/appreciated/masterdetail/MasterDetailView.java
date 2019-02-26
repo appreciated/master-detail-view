@@ -1,4 +1,4 @@
-package com.appreciated.masterdetail.view.masterdetail;
+package com.github.appreciated.masterdetail;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasSize;
@@ -17,7 +17,7 @@ import org.vaddon.css.query.values.WidthAttributes;
 
 @Tag("master-detail-view")
 @HtmlImport("frontend://com/github/appreciated/master-detail/master-detail-view.html")
-public abstract class MasterDetailView<M extends Component & MasterView<T>, D extends Component & HasUrlParameter<T> & DetailView<T>, T> extends PolymerTemplate<TemplateModel> implements HasSize, HasUrlParameter<T> {
+public abstract class MasterDetailView<M extends Component & MasterView<T>, D extends Component & HasUrlParameter<T>, T> extends PolymerTemplate<TemplateModel> implements HasSize, HasUrlParameter<T> {
 
     @Id("master-content")
     Div masterContent;

@@ -1,4 +1,4 @@
-package com.appreciated.masterdetail.view.masterdetail;
+package com.github.appreciated.masterdetail;
 
 
 public interface MasterView<T> {

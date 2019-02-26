@@ -1,4 +1,4 @@
-package com.appreciated.masterdetail.view.masterdetail;
+package com.github.appreciated.masterdetail;
 
 public class TargetMissesAnnotationException extends RuntimeException {
     public TargetMissesAnnotationException(Class<?> navigationTarget, Class annotation) {

@@ -1,10 +1,10 @@
 package com.appreciated.masterdetail.component;
 
-import com.appreciated.masterdetail.view.masterdetail.MasterView;
-import com.appreciated.masterdetail.view.masterdetail.MasterViewNavigationElementListener;
 import com.github.appreciated.card.ClickableCard;
 import com.github.appreciated.card.content.IconItem;
 import com.github.appreciated.card.content.ItemBody;
+import com.github.appreciated.masterdetail.MasterView;
+import com.github.appreciated.masterdetail.MasterViewNavigationElementListener;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import io.codearte.jfairy.Fairy;

@@ -1,7 +1,7 @@
 package com.appreciated.masterdetail;
 
 import com.appreciated.masterdetail.component.ChatOverview;
-import com.appreciated.masterdetail.view.masterdetail.MasterDetailView;
+import com.github.appreciated.masterdetail.MasterDetailView;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.Route;
 
