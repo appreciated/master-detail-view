@@ -5,7 +5,7 @@ import com.appreciated.masterdetail.view.masterdetail.MasterDetailView;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.Route;
 
-@Route("")
+@Route("master")
 public class MasterDemoView extends MasterDetailView<ChatOverview, DetailDemoView, Integer> {
 
     public MasterDemoView() {

@@ -6,7 +6,7 @@ import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.Route;
 
-@Route("detail")
+@Route("master/detail")
 public class DetailDemoView extends ChatView implements HasUrlParameter<Integer>, DetailView<Integer> {
 
     public DetailDemoView() {

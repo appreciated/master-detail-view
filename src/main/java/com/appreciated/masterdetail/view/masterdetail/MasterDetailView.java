@@ -55,7 +55,7 @@ public abstract class MasterDetailView<M extends Component & MasterView<T>, D ex
     public void setParameter(BeforeEvent beforeEvent, T t) {
         if (currentParameter != t) {
             currentParameter = t;
-            UI.getCurrent().navigate(String.valueOf(t));
+            UI.getCurrent().navigate(UI.getCurrent().getRouter().getUrl(this.getClass(), t));
         } else {
             if (isMasterAndDetail != null && isMasterAndDetail) {
                 try {
