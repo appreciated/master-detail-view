@@ -25,24 +25,64 @@ public abstract class MasterDetailView<M extends Component & MasterView<T>, D ex
     @Id("detail-content")
     Div detailContent;
 
-    boolean isMasterAndDetail = false;
+    Boolean isMasterAndDetail = null;
 
     private CustomMediaQuery isMasterAndDetailQuery;
     private Class<D> detailViewClass;
     private Component oldDetailView;
+    private T currentParameter;
 
     public MasterDetailView() {
         setSizeFull();
+        isMasterAndDetailQuery = new CustomMediaQuery(aBoolean -> setMasterAndDetail(!aBoolean));
+        isMasterAndDetailQuery.setQuery(new MediaQuery(new WidthAttributes.MaxWidth("600px")));
+        getElement().appendChild(isMasterAndDetailQuery.getElement());
+    }
+
+    private void setMasterAndDetail(boolean masterAndDetail) {
+        System.out.println("setMasterAndDetail: " + masterAndDetail);
+        if (isMasterAndDetail == null) {
+            isMasterAndDetail = masterAndDetail;
+            setParameter(null, currentParameter);
+        } else {
+            isMasterAndDetail = masterAndDetail;
+        }
+        if (oldDetailView == null && masterAndDetail) {
+            setParameter(null, currentParameter);
+        }
+    }
+
+    @Override
+    public void setParameter(BeforeEvent beforeEvent, T t) {
+        System.out.println("isMasterAndDetail: " + isMasterAndDetail);
+        if (currentParameter != t) {
+            currentParameter = t;
+            UI.getCurrent().navigate(String.valueOf(t));
+        } else {
+            if (isMasterAndDetail != null && isMasterAndDetail) {
+                try {
+                    if (oldDetailView != null) {
+                        getElement().removeChild(oldDetailView.getElement());
+                    }
+                    D instance = detailViewClass.newInstance();
+                    instance.getElement().setAttribute("slot", "detail-content-slot");
+                    instance.setParameter(null, t);
+                    getElement().appendChild(instance.getElement());
+                    oldDetailView = instance;
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public void setMaster(M component) {
         component.getElement().setAttribute("slot", "master-content-slot");
         getElement().appendChild(component.getElement());
-        isMasterAndDetailQuery = new CustomMediaQuery(aBoolean -> setMasterAndDetail(!aBoolean));
-        isMasterAndDetailQuery.setQuery(new MediaQuery(new WidthAttributes.MaxWidth("600px")));
-        getElement().appendChild(isMasterAndDetailQuery.getElement());
         component.setNavigationListener(parameter -> {
-            if (isMasterAndDetail) {
+            if (isMasterAndDetail != null && isMasterAndDetail) {
                 setParameter(null, parameter);
             } else {
                 UI.getCurrent().navigate(detailViewClass, parameter);
@@ -50,34 +90,8 @@ public abstract class MasterDetailView<M extends Component & MasterView<T>, D ex
         });
     }
 
-    private void setMasterAndDetail(boolean masterAndDetail) {
-        System.out.println("setMasterAndDetail: " + masterAndDetail);
-        isMasterAndDetail = masterAndDetail;
-    }
-
-    @Override
-    public void setParameter(BeforeEvent beforeEvent, T t) {
-        System.out.println("isMasterAndDetail: " + isMasterAndDetail);
-        if (isMasterAndDetail) {
-            try {
-                if (oldDetailView != null) {
-                    getElement().removeChild(oldDetailView.getElement());
-                }
-                D instance = detailViewClass.newInstance();
-                instance.getElement().setAttribute("slot", "detail-content-slot");
-                instance.setParameter(null, t);
-                getElement().appendChild(instance.getElement());
-                oldDetailView = instance;
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void setDetail(Class<D> tClass) {
-        this.detailViewClass = tClass;
+    public void setDetail(Class<D> detailClass) {
+        this.detailViewClass = detailClass;
     }
 
     /**
