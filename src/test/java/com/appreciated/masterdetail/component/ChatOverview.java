@@ -1,5 +1,7 @@
 package com.appreciated.masterdetail.component;
 
+import com.appreciated.masterdetail.view.masterdetail.MasterView;
+import com.appreciated.masterdetail.view.masterdetail.MasterViewNavigationElementListener;
 import com.github.appreciated.card.ClickableCard;
 import com.github.appreciated.card.content.IconItem;
 import com.github.appreciated.card.content.ItemBody;
@@ -10,15 +12,12 @@ import io.codearte.jfairy.producer.person.Person;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
-public class ChatOverview extends VerticalLayout {
+public class ChatOverview extends VerticalLayout implements MasterView<Integer> {
 
-    private Consumer<Integer> listener;
+    private MasterViewNavigationElementListener<Integer> listener;
 
-    public ChatOverview(Consumer<Integer> listener) {
-        this.listener = listener;
-
+    public ChatOverview() {
         List<ClickableCard> cards = new ArrayList<>();
 
         for (int i = 0; i < 20; i++) {
@@ -40,10 +39,14 @@ public class ChatOverview extends VerticalLayout {
 
         Fairy fairy = Fairy.create();
         Person person = fairy.person();
-        ClickableCard card = new ClickableCard(event -> listener.accept(i), new IconItem(img, new ItemBody(person.getFullName(), "My telephone number is " + person.getTelephoneNumber())));
+        ClickableCard card = new ClickableCard(event -> listener.onMasterViewNavigationEvent(i), new IconItem(img, new ItemBody(person.getFullName(), "My telephone number is " + person.getTelephoneNumber())));
         card.setElevation(0);
         card.setWidth("100%");
         return card;
     }
 
+    @Override
+    public void setNavigationListener(MasterViewNavigationElementListener<Integer> listener) {
+        this.listener = listener;
+    }
 }

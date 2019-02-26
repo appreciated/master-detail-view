@@ -2,27 +2,19 @@ package com.appreciated.masterdetail;
 
 import com.appreciated.masterdetail.component.ChatOverview;
 import com.appreciated.masterdetail.view.masterdetail.MasterDetailView;
-import com.vaadin.flow.component.AttachEvent;
-import com.vaadin.flow.component.Component;
+import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.Route;
 
 @Route("")
-public class MasterDemoView extends MasterDetailView {
-
-    private ChatOverview overview;
+public class MasterDemoView extends MasterDetailView<ChatOverview, DetailDemoView, Integer> {
 
     public MasterDemoView() {
-        setMaster(getMasterView());
-        setDetail(DetailDemoView.class, 0, true);
-    }
-
-    private Component getMasterView() {
-        overview = new ChatOverview(integer -> setDetail(DetailDemoView.class, integer));
-        return overview;
+        setMaster(new ChatOverview());
+        setDetail(DetailDemoView.class);
     }
 
     @Override
-    protected void onAttach(AttachEvent attachEvent) {
-        super.onAttach(attachEvent);
+    public void setParameter(BeforeEvent beforeEvent, Integer integer) {
+        super.setParameter(beforeEvent, integer);
     }
 }
