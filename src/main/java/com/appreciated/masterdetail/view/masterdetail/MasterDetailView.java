@@ -40,7 +40,6 @@ public abstract class MasterDetailView<M extends Component & MasterView<T>, D ex
     }
 
     private void setMasterAndDetail(boolean masterAndDetail) {
-        System.out.println("setMasterAndDetail: " + masterAndDetail);
         if (isMasterAndDetail == null) {
             isMasterAndDetail = masterAndDetail;
             setParameter(null, currentParameter);
@@ -54,7 +53,6 @@ public abstract class MasterDetailView<M extends Component & MasterView<T>, D ex
 
     @Override
     public void setParameter(BeforeEvent beforeEvent, T t) {
-        System.out.println("isMasterAndDetail: " + isMasterAndDetail);
         if (currentParameter != t) {
             currentParameter = t;
             UI.getCurrent().navigate(String.valueOf(t));
