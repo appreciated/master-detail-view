@@ -29,10 +29,6 @@
     right: -5px;
     background-color: var(--lumo-primary-color);
     transform: rotate(0deg) skew(-50deg);
-    -moz-transform: rotate(0deg) skew(-50deg);
-    -ms-transform: rotate(0deg) skew(-50deg);
-    -o-transform: rotate(0deg) skew(-50deg);
-    -webkit-transform: rotate(0deg) skew(-50deg);
 }
 
 .user-message {
@@ -46,8 +42,4 @@
     background-color: rgb(255, 255, 255);
     left: -5px;
     transform: rotate(0deg) skew(50deg);
-    -moz-transform: rotate(0deg) skew(50deg);
-    -ms-transform: rotate(0deg) skew(50deg);
-    -o-transform: rotate(0deg) skew(50deg);
-    -webkit-transform: rotate(0deg) skew(50deg);
 }
