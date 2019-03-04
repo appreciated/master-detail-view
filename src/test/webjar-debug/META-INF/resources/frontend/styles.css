@@ -5,7 +5,6 @@
     padding: 10px 18px;
     position: relative;
     vertical-align: top;
-    /*animation: valo-animate-in-slide-up 0.35s ease, valo-animate-in-fade 0.35s ease;*/
 }
 
 .message::before {
