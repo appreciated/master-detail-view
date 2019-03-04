@@ -30,6 +30,7 @@ public abstract class MasterDetailView<M extends Component & MasterView<T>, D ex
     private Class<D> detailViewClass;
     private Component oldDetailView;
     private T currentParameter;
+    private M master;
 
     public MasterDetailView() {
         setSizeFull();
@@ -44,6 +45,9 @@ public abstract class MasterDetailView<M extends Component & MasterView<T>, D ex
             setParameter(null, currentParameter);
         } else {
             isMasterAndDetail = masterAndDetail;
+            if (master != null) {
+                master.onMasterStateChanged(isMasterAndDetail);
+            }
         }
         if (oldDetailView == null && masterAndDetail) {
             setParameter(null, currentParameter);
@@ -64,6 +68,7 @@ public abstract class MasterDetailView<M extends Component & MasterView<T>, D ex
                     instance.getElement().setAttribute("slot", "detail-content-slot");
                     instance.setParameter(null, t);
                     getElement().appendChild(instance.getElement());
+                    master.setActiveElement(t);
                     oldDetailView = instance;
                 } catch (InstantiationException e) {
                     e.printStackTrace();
@@ -75,6 +80,7 @@ public abstract class MasterDetailView<M extends Component & MasterView<T>, D ex
     }
 
     public void setMaster(M component) {
+        master = component;
         component.getElement().setAttribute("slot", "master-content-slot");
         getElement().appendChild(component.getElement());
         component.setNavigationListener(parameter -> {

@@ -42,7 +42,12 @@ public class ChatOverview extends StatefulCardGroup<StatefulCard> implements Mas
 
     @Override
     public void setActiveElement(Integer element) {
-        setState(getCards().get(element));
+        setState(getCards().get(element), false);
+    }
+
+    @Override
+    public void onMasterStateChanged(boolean isMasterAndDetail) {
+        setHighlight(isMasterAndDetail);
     }
 
 }
