@@ -8,7 +8,6 @@ import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
-import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.templatemodel.TemplateModel;
 import org.vaddon.CustomMediaQuery;
@@ -51,8 +50,7 @@ public abstract class MasterDetailView<M extends Component & MasterView<T>, D ex
         }
     }
 
-    @Override
-    public void setParameter(BeforeEvent beforeEvent, T t) {
+    public void setParameter(T t) {
         if (currentParameter != t) {
             currentParameter = t;
             UI.getCurrent().navigate(UI.getCurrent().getRouter().getUrl(this.getClass(), t));

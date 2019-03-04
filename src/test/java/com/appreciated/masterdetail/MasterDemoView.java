@@ -15,6 +15,6 @@ public class MasterDemoView extends MasterDetailView<ChatOverview, DetailDemoVie
 
     @Override
     public void setParameter(BeforeEvent beforeEvent, Integer integer) {
-        super.setParameter(beforeEvent, integer);
+        setParameter(integer);
     }
 }
