@@ -5,7 +5,7 @@
 
     <groupId>com.github.appreciated</groupId>
     <artifactId>master-detail-view</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.8</version>
     <name>Master/Detail View</name>
     <description>A master/default view for Vaadin Flow</description>
 
