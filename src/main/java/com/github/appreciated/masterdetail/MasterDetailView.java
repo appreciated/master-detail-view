@@ -4,7 +4,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
@@ -15,7 +15,7 @@ import org.vaddon.css.query.MediaQuery;
 import org.vaddon.css.query.values.WidthAttributes;
 
 @Tag("master-detail-view")
-@HtmlImport("frontend://com/github/appreciated/master-detail/master-detail-view.html")
+@JsModule("./com/github/appreciated/master-detail/master-detail-view.js")
 public abstract class MasterDetailView<M extends Component & MasterView<T>, D extends Component & HasUrlParameter<T>, T> extends PolymerTemplate<TemplateModel> implements HasSize, HasUrlParameter<T> {
 
     @Id("master-content")
@@ -70,9 +70,7 @@ public abstract class MasterDetailView<M extends Component & MasterView<T>, D ex
                     getElement().appendChild(instance.getElement());
                     master.setActiveElement(t);
                     oldDetailView = instance;
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
+                } catch (InstantiationException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }

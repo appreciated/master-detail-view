@@ -1,6 +1,8 @@
-<dom-module id="master-detail-view">
-    <template>
-        <style>
+import {html} from '@polymer/polymer/polymer-element.js';
+
+class MasterDetailView extends Polymer.Element {
+    static get template() {
+        return html`<style>
             #master-wrapper {
                 display: flex;
                 width: 100%;
@@ -33,14 +35,12 @@
             <div id="detail-content">
                 <slot name="detail-content-slot"></slot>
             </div>
-        </div>
-    </template>
-    <script>
-        class MasterDetailView extends Polymer.Element {
-            static get is() {
-                return 'master-detail-view'
-            }
-        }
-        customElements.define(MasterDetailView.is, MasterDetailView);
-    </script>
-</dom-module>
+        </div>`;
+    }
+
+    static get is() {
+        return 'master-detail-view'
+    }
+}
+
+customElements.define(MasterDetailView.is, MasterDetailView);

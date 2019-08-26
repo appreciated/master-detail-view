@@ -5,12 +5,13 @@
 
     <groupId>com.github.appreciated</groupId>
     <artifactId>master-detail-view</artifactId>
-    <version>0.8</version>
+    <version>2.0.0.beta1</version>
     <name>Master/Detail View</name>
-    <description>A master/default view for Vaadin Flow</description>
+    <description>A master/default view for Vaadin 14</description>
 
     <properties>
-        <vaadin.version>12.0.7</vaadin.version>
+        <vaadin.version>14.0.1</vaadin.version>
+        <jetty.version>9.4.15.v20190215</jetty.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -112,22 +113,35 @@
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.4.11.v20180605</version>
+                <version>${jetty.version}</version>
                 <configuration>
                     <scanIntervalSeconds>-1</scanIntervalSeconds>
-                    <!-- Use test scope because the UI/demo classes are in 
+                    <!-- Use test scope because the UI/demo classes are in
                         the test package. -->
                     <useTestScope>true</useTestScope>
                     <supportedPackagings>
                         <supportedPackaging>jar</supportedPackaging>
                     </supportedPackagings>
-                    <webAppConfig>
-                        <resourceBases>
-                            <resourceBase>src/main/resources/META-INF/resources</resourceBase>
-                            <resourceBase>src/test/webjar-debug/META-INF/resources</resourceBase>
-                        </resourceBases>
-                    </webAppConfig>
+                    <stopKey>${project.artifactId}</stopKey>
+                    <stopPort>8081</stopPort>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-maven-plugin</artifactId>
+                <version>${vaadin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-frontend</goal>
+                            <goal>build-frontend</goal>
+                        </goals>
+                        <configuration>
+                            <convertHtml>false</convertHtml>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
