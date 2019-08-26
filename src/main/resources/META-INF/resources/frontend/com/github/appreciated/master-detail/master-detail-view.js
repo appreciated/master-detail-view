@@ -1,6 +1,6 @@
-import {html} from '@polymer/polymer/polymer-element.js';
+import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 
-class MasterDetailView extends Polymer.Element {
+class MasterDetailView extends PolymerElement {
     static get template() {
         return html`<style>
             #master-wrapper {
