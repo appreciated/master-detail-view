@@ -8,7 +8,9 @@ import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
+import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
+import com.vaadin.flow.router.OptionalParameter;
 import com.vaadin.flow.templatemodel.TemplateModel;
 import org.vaddon.CustomMediaQuery;
 import org.vaddon.css.query.MediaQuery;
@@ -16,7 +18,7 @@ import org.vaddon.css.query.values.WidthAttributes;
 
 @Tag("master-detail-view")
 @JsModule("./com/github/appreciated/master-detail/master-detail-view.js")
-public abstract class MasterDetailView<M extends Component & MasterView<T>, D extends Component & HasUrlParameter<T>, T> extends PolymerTemplate<TemplateModel> implements HasSize, HasUrlParameter<T> {
+public abstract class MasterDetailView<M extends Component & MasterView<Integer>, D extends Component & HasUrlParameter<Integer>, Integer> extends PolymerTemplate<TemplateModel> implements HasSize, HasUrlParameter<Integer> {
 
     @Id("master-content")
     Div masterContent;
@@ -29,7 +31,7 @@ public abstract class MasterDetailView<M extends Component & MasterView<T>, D ex
     private CustomMediaQuery isMasterAndDetailQuery;
     private Class<D> detailViewClass;
     private Component oldDetailView;
-    private T currentParameter;
+    private Integer currentParameter;
     private M master;
 
     public MasterDetailView() {
@@ -54,10 +56,11 @@ public abstract class MasterDetailView<M extends Component & MasterView<T>, D ex
         }
     }
 
-    public void setParameter(T t) {
-        if (currentParameter != t) {
-            currentParameter = t;
-            UI.getCurrent().navigate(UI.getCurrent().getRouter().getUrl(this.getClass(), t));
+    @Override
+    public void setParameter(BeforeEvent beforeEvent, @OptionalParameter Integer integer) {
+        if (currentParameter != integer) {
+            currentParameter = integer;
+            UI.getCurrent().navigate(UI.getCurrent().getRouter().getUrl(this.getClass(), integer));
         } else {
             if (isMasterAndDetail != null && isMasterAndDetail) {
                 try {
@@ -66,9 +69,9 @@ public abstract class MasterDetailView<M extends Component & MasterView<T>, D ex
                     }
                     D instance = detailViewClass.newInstance();
                     instance.getElement().setAttribute("slot", "detail-content-slot");
-                    instance.setParameter(null, t);
+                    instance.setParameter(null, integer);
                     getElement().appendChild(instance.getElement());
-                    master.setActiveElement(t);
+                    master.setActiveElement(integer);
                     oldDetailView = instance;
                 } catch (InstantiationException | IllegalAccessException e) {
                     e.printStackTrace();

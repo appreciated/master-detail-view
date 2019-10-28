@@ -10,14 +10,15 @@ import com.vaadin.flow.component.html.Div;
 import io.codearte.jfairy.Fairy;
 import io.codearte.jfairy.producer.person.Person;
 
-public class ChatOverview extends StatefulCardGroup<StatefulCard> implements MasterView<Integer> {
+public class ChatsOverview extends StatefulCardGroup<StatefulCard> implements MasterView<Integer> {
 
     private MasterViewNavigationElementListener<Integer> listener;
 
-    public ChatOverview() {
+    public ChatsOverview() {
+       /*
         for (int i = 0; i < 20; i++) {
             add(getCard(i));
-        }
+        }*/
     }
 
     private StatefulCard getCard(int i) {
@@ -42,7 +43,9 @@ public class ChatOverview extends StatefulCardGroup<StatefulCard> implements Mas
 
     @Override
     public void setActiveElement(Integer element) {
-        setState(getCards().get(element), false);
+        if (element != null) {
+            setState(getCards().get(element), false);
+        }
     }
 
     @Override
