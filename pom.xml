@@ -5,7 +5,7 @@
 
     <groupId>com.github.appreciated</groupId>
     <artifactId>master-detail-view</artifactId>
-    <version>2.0.0.beta1</version>
+    <version>2.0.0.beta2</version>
     <name>Master/Detail View</name>
     <description>A master/default view for Vaadin 14</description>
 
