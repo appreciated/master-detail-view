@@ -11,6 +11,7 @@ import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.OptionalParameter;
+import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.templatemodel.TemplateModel;
 import org.vaddon.CustomMediaQuery;
 import org.vaddon.css.query.MediaQuery;
@@ -67,7 +68,7 @@ public abstract class MasterDetailView<M extends Component & MasterView<Integer>
                     if (oldDetailView != null) {
                         getElement().removeChild(oldDetailView.getElement());
                     }
-                    D instance = detailViewClass.newInstance();
+                    D instance = VaadinService.getCurrent().getInstantiator().createComponent(detailViewClass);
                     instance.getElement().setAttribute("slot", "detail-content-slot");
                     instance.setParameter(null, integer);
                     getElement().appendChild(instance.getElement());
