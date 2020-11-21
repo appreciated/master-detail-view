@@ -6,20 +6,20 @@ import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.polymertemplate.Id;
-import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
+import com.vaadin.flow.component.littemplate.LitTemplate;
+import com.vaadin.flow.component.template.Id;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.OptionalParameter;
+import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.server.VaadinService;
-import com.vaadin.flow.templatemodel.TemplateModel;
 import org.vaddon.CustomMediaQuery;
 import org.vaddon.css.query.MediaQuery;
 import org.vaddon.css.query.values.WidthAttributes;
 
 @Tag("master-detail-view")
-@JsModule("./com/github/appreciated/master-detail/master-detail-view.js")
-public abstract class MasterDetailView<M extends Component & MasterView<Integer>, D extends Component & HasUrlParameter<Integer>, Integer> extends PolymerTemplate<TemplateModel> implements HasSize, HasUrlParameter<Integer> {
+@JsModule("./com/github/appreciated/master-detail/master-detail-view.ts")
+public abstract class MasterDetailView<M extends Component & MasterView<Integer>, D extends Component & HasUrlParameter<Integer>, Integer> extends LitTemplate implements HasSize, HasUrlParameter<Integer> {
 
     @Id("master-content")
     Div masterContent;
@@ -61,22 +61,19 @@ public abstract class MasterDetailView<M extends Component & MasterView<Integer>
     public void setParameter(BeforeEvent beforeEvent, @OptionalParameter Integer integer) {
         if (currentParameter != integer) {
             currentParameter = integer;
-            UI.getCurrent().navigate(UI.getCurrent().getRouter().getUrl(this.getClass(), integer));
+            final String url = RouteConfiguration.forSessionScope().getUrl(this.getClass(), integer);
+            UI.getCurrent().navigate(url);
         } else {
             if (isMasterAndDetail != null && isMasterAndDetail) {
-                try {
-                    if (oldDetailView != null) {
-                        getElement().removeChild(oldDetailView.getElement());
-                    }
-                    D instance = VaadinService.getCurrent().getInstantiator().createComponent(detailViewClass);
-                    instance.getElement().setAttribute("slot", "detail-content-slot");
-                    instance.setParameter(null, integer);
-                    getElement().appendChild(instance.getElement());
-                    master.setActiveElement(integer);
-                    oldDetailView = instance;
-                } catch (InstantiationException | IllegalAccessException e) {
-                    e.printStackTrace();
+                if (oldDetailView != null) {
+                    getElement().removeChild(oldDetailView.getElement());
                 }
+                D instance = VaadinService.getCurrent().getInstantiator().createComponent(detailViewClass);
+                instance.getElement().setAttribute("slot", "detail-content-slot");
+                instance.setParameter(null, integer);
+                getElement().appendChild(instance.getElement());
+                master.setActiveElement(integer);
+                oldDetailView = instance;
             }
         }
     }
