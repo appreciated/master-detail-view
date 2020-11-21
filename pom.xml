@@ -7,10 +7,10 @@
     <artifactId>master-detail-view</artifactId>
     <version>2.0.0.beta2</version>
     <name>Master/Detail View</name>
-    <description>A master/default view for Vaadin 14</description>
+    <description>A master/default view for Vaadin 15+</description>
 
     <properties>
-        <vaadin.version>14.0.11</vaadin.version>
+        <vaadin.version>[15.0.0,)</vaadin.version>
         <jetty.version>9.4.15.v20190215</jetty.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -27,17 +27,6 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.vaadin</groupId>
-                <artifactId>vaadin-bom</artifactId>
-                <type>pom</type>
-                <scope>import</scope>
-                <version>${vaadin.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <repositories>
         <repository>
@@ -62,6 +51,7 @@
             <groupId>com.vaadin</groupId>
             <!-- Replace artifactId with vaadin-core to use only free components -->
             <artifactId>vaadin-core</artifactId>
+            <version>${vaadin.version}</version>
             <exclusions>
                 <!-- Webjars are only needed when running in Vaadin 13 compatibility mode in V14.
                      Your add-on can support npm in the same version mode and V13 compatiblity mode at the same time,
@@ -106,6 +96,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
+            <version>1.7.28</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -167,16 +158,13 @@
             <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
-                <version>${vaadin.version}</version>
+                <version>17.0.7</version>
                 <executions>
                     <execution>
                         <goals>
                             <goal>prepare-frontend</goal>
                             <goal>build-frontend</goal>
                         </goals>
-                        <configuration>
-                            <convertHtml>false</convertHtml>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
